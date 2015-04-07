@@ -1,0 +1,12 @@
+mkdir -p /home/lavannya/webapps/example/run
+pid=$(/sbin/pidof /home/lavannya/webapps/example/bin/node)
+if echo "$pid" | grep -q " "; then
+    pid=""
+fi
+if [ -n "$pid" ]; then
+  user=$(ps -p $pid -o user | tail -n 1)
+  if [ $user = "lavannya" ]; then
+    kill "$pid"
+    rm -f /home/lavannya/webapps/example/run/node.pid
+  fi
+fi
